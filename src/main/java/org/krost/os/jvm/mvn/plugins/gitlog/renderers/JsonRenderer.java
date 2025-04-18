@@ -2,7 +2,6 @@ package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,8 +17,7 @@ public class JsonRenderer extends FileRenderer {
 	private boolean firstCommit = true;
 	private Collection<RevTag> tags = new ArrayList<RevTag>();
 
-	public JsonRenderer(Log log, File targetFolder, String filename, boolean fullGitMessage)
-			throws IOException {
+	public JsonRenderer(Log log, File targetFolder, String filename, boolean fullGitMessage) throws IOException {
 		super(log, targetFolder, filename, false);
 		this.fullGitMessage = fullGitMessage;
 
@@ -48,7 +46,7 @@ public class JsonRenderer extends FileRenderer {
 		StringBuffer tagsJson = new StringBuffer();
 		boolean firstTag = true;
 		for (RevTag tag : this.tags) {
-			if(firstTag) {
+			if (firstTag) {
 				firstTag = false;
 				tagsJson.append(" ");
 			} else {
@@ -56,33 +54,27 @@ public class JsonRenderer extends FileRenderer {
 			}
 			tagsJson.append("{ \"name\":\"").append(encode(tag.getTagName())).append("\" }");
 		}
-		if(!firstTag) {
+		if (!firstTag) {
 			tagsJson.append(" ");
 		}
-		this.tags.clear(); //reset for next commit's tags
+		this.tags.clear(); // reset for next commit's tags
 
-		if(firstCommit) {
+		if (firstCommit) {
 			json.append("    ");
 			firstCommit = false;
 		} else {
 			json.append("  , ");
 		}
 		String jsonItem;
-		jsonItem = template
-				.replace("{id}", encode(commit.getName()))
-				.replace("{message}", encode(message))
-				.replace("{tagItems}", tagsJson.toString())
-				.replace("{date}", encode(date));
-		if (Formatter.showCommiter()){
+		jsonItem = template.replace("{id}", encode(commit.getName())).replace("{message}", encode(message))
+				.replace("{tagItems}", tagsJson.toString()).replace("{date}", encode(date));
+		if (Formatter.showCommiter()) {
 			jsonItem = jsonItem.replace("{authorName}", encode(commit.getAuthorIdent().getName()))
 					.replace("{authorEmail}", encode(commit.getAuthorIdent().getEmailAddress()))
 					.replace("{committerName}", encode(commit.getCommitterIdent().getName()))
 					.replace("{committerEmail}", encode(commit.getCommitterIdent().getEmailAddress()));
-		}
-		else {
-			jsonItem = jsonItem.replace("{authorName}", "")
-					.replace("{authorEmail}", "")
-					.replace("{committerName}", "")
+		} else {
+			jsonItem = jsonItem.replace("{authorName}", "").replace("{authorEmail}", "").replace("{committerName}", "")
 					.replace("{committerEmail}", "");
 		}
 		json.append(jsonItem);
@@ -96,11 +88,11 @@ public class JsonRenderer extends FileRenderer {
 	}
 
 	protected static String encode(String input) {
-		if((input == null) || (input.length() == 0)) {
+		if ((input == null) || (input.length() == 0)) {
 			return input;
 		}
-		if(input.lastIndexOf("\n") == input.length()-1) {
-			input = input.substring(0, input.length()-1);
+		if (input.lastIndexOf("\n") == input.length() - 1) {
+			input = input.substring(0, input.length() - 1);
 		}
 		input = input.replace("\\", "\\\\");
 		input = input.replace("\n", "\\n");

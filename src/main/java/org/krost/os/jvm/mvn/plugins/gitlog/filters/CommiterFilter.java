@@ -1,8 +1,8 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.filters;
 
-import org.eclipse.jgit.revwalk.RevCommit;
-
 import java.util.List;
+
+import org.eclipse.jgit.revwalk.RevCommit;
 
 public class CommiterFilter implements CommitFilter {
 

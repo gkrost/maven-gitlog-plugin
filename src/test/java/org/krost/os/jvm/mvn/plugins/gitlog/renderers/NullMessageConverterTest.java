@@ -3,7 +3,6 @@ package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.krost.os.jvm.mvn.plugins.gitlog.renderers.NullMessageConverter;
 
 public class NullMessageConverterTest {
 

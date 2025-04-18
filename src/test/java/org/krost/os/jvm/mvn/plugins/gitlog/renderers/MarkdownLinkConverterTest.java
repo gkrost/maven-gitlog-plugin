@@ -3,7 +3,6 @@ package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.krost.os.jvm.mvn.plugins.gitlog.renderers.MarkdownLinkConverter;
 
 public class MarkdownLinkConverterTest {
 
@@ -27,8 +26,8 @@ public class MarkdownLinkConverterTest {
 
 	@Test
 	public void multipleHyperlinksAreRendered() {
-		test("First a link <a href=\"URL1\">Text1</a> a scond one <a href=\"URL2\">Text2</a> and the end.", 
-			 "First a link [Text1](URL1) a scond one [Text2](URL2) and the end.");
+		test("First a link <a href=\"URL1\">Text1</a> a scond one <a href=\"URL2\">Text2</a> and the end.",
+				"First a link [Text1](URL1) a scond one [Text2](URL2) and the end.");
 	}
 
 	private void test(String input, String expectedOutput) {

@@ -8,9 +8,8 @@ import org.apache.maven.plugin.logging.Log;
 /**
  * Helper class to convert a HTML link into an Asciidoc link.
  * 
- * It searches for a <a href="...URL...">...Text...</a> and the
- * URL and text is used to build afterwards the Asciidoc link.
- * The Asciidoc links goes like ...URL...[...Text...].
+ * It searches for a <a href="...URL...">...Text...</a> and the URL and text is used to build afterwards the Asciidoc
+ * link. The Asciidoc links goes like ...URL...[...Text...].
  *
  */
 public class AsciidocLinkConverter {
@@ -25,7 +24,7 @@ public class AsciidocLinkConverter {
 		// because the Converters will use double quotes.
 		this.pattern = Pattern.compile("<a\\s+href=(\"([^\"]+)\").*?>(.*?)</a>");
 	}
-	
+
 	public String formatCommitMessage(String original) {
 		try {
 			Matcher matcher = pattern.matcher(original);
@@ -37,5 +36,5 @@ public class AsciidocLinkConverter {
 		}
 		return original;
 	}
-	
+
 }

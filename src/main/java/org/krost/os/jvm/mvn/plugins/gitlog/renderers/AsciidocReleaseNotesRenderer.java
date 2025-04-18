@@ -1,48 +1,36 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
-import org.apache.maven.plugin.logging.Log;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTag;
-
 import static org.krost.os.jvm.mvn.plugins.gitlog.renderers.Formatter.NEW_LINE;
 
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.maven.plugin.logging.Log;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTag;
+
 /**
  * Asciidoc Renderer to get a*.md file.
  * <p>
- * The created asciidoc file will have
- * - a document title (level 0),
- * - bold tags
- * - and commits in each line.
+ * The created asciidoc file will have - a document title (level 0), - bold tags - and commits in each line.
  * <p>
  * Asciidoc reference is http://asciidoctor.org/docs/
  * <p>
- * Output Example:
- * = Maven GitLog Plugin changelog
- * *maven-gitlog-plugin-1.4.11*
- * 2012-03-17 07:33:55 +0100    Updated maven version in docs (Daniel Flower)
- * ...
+ * Output Example: = Maven GitLog Plugin changelog *maven-gitlog-plugin-1.4.11* 2012-03-17 07:33:55 +0100 Updated maven
+ * version in docs (Daniel Flower) ...
  * <p>
  * Table View example
  * </p>
  * == Maven GitLog Plugin changelog
  * <p>
- * |===
- * |Date | Merge
- * |2017-11-23 07:34:02 +0100 |asciidoc also als table view (Marcel Widmer) +
- * |2017-11-22 12:24:41 +0100 |update README (Marcel Widmer) +
- * |2017-11-22 12:19:21 +0100 |Merge Commits Only (Marcel Widmer) +
+ * |=== |Date | Merge |2017-11-23 07:34:02 +0100 |asciidoc also als table view (Marcel Widmer) + |2017-11-22 12:24:41
+ * +0100 |update README (Marcel Widmer) + |2017-11-22 12:19:21 +0100 |Merge Commits Only (Marcel Widmer) +
  * <p>
- * |===
- * == *gitlog-maven-plugin-1.13.3* +
+ * |=== == *gitlog-maven-plugin-1.13.3* +
  * <p>
- * |===
- * |Date | Merge
- * |2016-09-24 08:40:27 +0200 |Bumped release plugin version (Daniel Flower) +
- * |2016-09-24 08:38:49 +0200 |Merge pull request #42 from orevial/asciidoc-support (GitHub) +
- * |2016-09-22 16:33:27 +0200 |Add Asciidoc converter support (Olivier Revial) +
+ * |=== |Date | Merge |2016-09-24 08:40:27 +0200 |Bumped release plugin version (Daniel Flower) + |2016-09-24 08:38:49
+ * +0200 |Merge pull request #42 from orevial/asciidoc-support (GitHub) + |2016-09-22 16:33:27 +0200 |Add Asciidoc
+ * converter support (Olivier Revial) +
  * <p>
  * |===
  */
@@ -57,8 +45,9 @@ public class AsciidocReleaseNotesRenderer extends FileRenderer {
 	private String asciidocTableViewHeader1; // Date
 	private String asciidocTableViewHeader2; // Commit
 
-	public AsciidocReleaseNotesRenderer(Log log, File targetFolder, String filename, boolean fullGitMessage, MessageConverter messageConverter,
-										String asciidocHeading, boolean asciidocTableView, String asciidocTableViewHeader1, String asciidocTableViewHeader2) throws IOException {
+	public AsciidocReleaseNotesRenderer(Log log, File targetFolder, String filename, boolean fullGitMessage,
+			MessageConverter messageConverter, String asciidocHeading, boolean asciidocTableView,
+			String asciidocTableViewHeader1, String asciidocTableViewHeader2) throws IOException {
 		super(log, targetFolder, filename, false);
 		this.fullGitMessage = fullGitMessage;
 		this.messageConverter = messageConverter;
@@ -68,7 +57,6 @@ public class AsciidocReleaseNotesRenderer extends FileRenderer {
 		this.asciidocTableViewHeader2 = ((asciidocTableViewHeader2 == null) ? "Commit" : asciidocTableViewHeader2);
 		asciidocLinkConverter = new AsciidocLinkConverter(log);
 	}
-
 
 	public void renderHeader(String reportTitle) throws IOException {
 		if (reportTitle != null && reportTitle.length() > 0) {
@@ -82,23 +70,23 @@ public class AsciidocReleaseNotesRenderer extends FileRenderer {
 	}
 
 	public void renderTag(RevTag tag) throws IOException {
-			if (!previousWasTag) {
-					writer.write(NEW_LINE);
-			}else {
-				if (asciidocTableView) {
-					renderTableFooter();
-					writer.write(asciidocHeading + "= ");
-					writer.write(tag.getTagName());
-					renderTableHeader();
-				}else {
-					writer.write("*"); // MD start bold
-					writer.write(tag.getTagName());
-					writer.write("*"); // MD end bold
-					writer.write(" +"); // MD line warp
-					writer.write(NEW_LINE);
-				}
+		if (!previousWasTag) {
+			writer.write(NEW_LINE);
+		} else {
+			if (asciidocTableView) {
+				renderTableFooter();
+				writer.write(asciidocHeading + "= ");
+				writer.write(tag.getTagName());
+				renderTableHeader();
+			} else {
+				writer.write("*"); // MD start bold
+				writer.write(tag.getTagName());
+				writer.write("*"); // MD end bold
+				writer.write(" +"); // MD line warp
+				writer.write(NEW_LINE);
 			}
-			previousWasTag = true;
+		}
+		previousWasTag = true;
 	}
 
 	public void renderCommit(RevCommit commit) throws IOException {
@@ -114,7 +102,7 @@ public class AsciidocReleaseNotesRenderer extends FileRenderer {
 
 		if (asciidocTableView) {
 			renderTableCommit(commit, message);
-		}else {
+		} else {
 			writer.write(Formatter.formatDateTime(commit.getCommitTime()) + "     " + message);
 			writer.write(" " + Formatter.formatCommiter(commit.getCommitterIdent()));
 			writer.write(" +"); // MD line warp
@@ -150,7 +138,6 @@ public class AsciidocReleaseNotesRenderer extends FileRenderer {
 			writer.write(NEW_LINE);
 		}
 	}
-
 
 	public void renderFooter() throws IOException {
 		if (asciidocTableView) {

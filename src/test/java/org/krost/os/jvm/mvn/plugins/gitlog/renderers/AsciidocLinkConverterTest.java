@@ -3,7 +3,6 @@ package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.krost.os.jvm.mvn.plugins.gitlog.renderers.AsciidocLinkConverter;
 
 public class AsciidocLinkConverterTest {
 
@@ -27,8 +26,8 @@ public class AsciidocLinkConverterTest {
 
 	@Test
 	public void multipleHyperlinksAreRendered() {
-		test("First a link <a href=\"URL1\">Text1</a> a scond one <a href=\"URL2\">Text2</a> and the end.", 
-			 "First a link URL1[Text1] a scond one URL2[Text2] and the end.");
+		test("First a link <a href=\"URL1\">Text1</a> a scond one <a href=\"URL2\">Text2</a> and the end.",
+				"First a link URL1[Text1] a scond one URL2[Text2] and the end.");
 	}
 
 	private void test(String input, String expectedOutput) {

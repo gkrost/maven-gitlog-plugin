@@ -1,9 +1,9 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
-import org.apache.maven.plugin.logging.Log;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.maven.plugin.logging.Log;
 
 public class GitHubIssueLinkConverter implements MessageConverter {
 

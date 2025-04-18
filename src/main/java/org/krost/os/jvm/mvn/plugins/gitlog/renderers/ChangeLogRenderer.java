@@ -1,9 +1,9 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
+import java.io.IOException;
+
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
-
-import java.io.IOException;
 
 public interface ChangeLogRenderer {
 

@@ -1,11 +1,11 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
+import java.io.IOException;
+
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
-
-import java.io.IOException;
 
 public class MavenLoggerRenderer implements ChangeLogRenderer {
 
@@ -34,8 +34,8 @@ public class MavenLoggerRenderer implements ChangeLogRenderer {
 	}
 
 	public void renderCommit(RevCommit commit) throws IOException {
-		log.info(Formatter.formatDateTime(commit.getCommitTime()) + " "
-				+ commit.getShortMessage() + " " + Formatter.formatCommiter(commit.getCommitterIdent()));
+		log.info(Formatter.formatDateTime(commit.getCommitTime()) + " " + commit.getShortMessage() + " "
+				+ Formatter.formatCommiter(commit.getCommitterIdent()));
 		previousWasTag = false;
 	}
 

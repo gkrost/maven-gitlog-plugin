@@ -1,9 +1,9 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
-import org.apache.maven.plugin.logging.Log;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.maven.plugin.logging.Log;
 
 public class JiraIssueLinkConverter implements MessageConverter {
 
@@ -24,8 +24,8 @@ public class JiraIssueLinkConverter implements MessageConverter {
 	public String formatCommitMessage(String original) {
 		try {
 			Matcher matcher = pattern.matcher(original);
-				String result = matcher.replaceAll("<a href=\"" + urlPrefix + "$0\">$0</a>");
-				return result;
+			String result = matcher.replaceAll("<a href=\"" + urlPrefix + "$0\">$0</a>");
+			return result;
 		} catch (Exception e) {
 			// log, but don't let this small setback fail the build
 			log.info("Unable to parse issue tracking URL in commit message: " + original, e);

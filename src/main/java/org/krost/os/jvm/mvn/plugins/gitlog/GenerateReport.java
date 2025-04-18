@@ -1,11 +1,11 @@
 package org.krost.os.jvm.mvn.plugins.gitlog;
 
+import java.io.File;
+import java.util.Locale;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
-
-import java.io.File;
-import java.util.Locale;
 import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.sink.Sink;

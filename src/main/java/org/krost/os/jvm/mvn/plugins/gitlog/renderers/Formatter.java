@@ -1,11 +1,11 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
-import org.apache.maven.plugin.logging.Log;
-import org.eclipse.jgit.lib.PersonIdent;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.apache.maven.plugin.logging.Log;
+import org.eclipse.jgit.lib.PersonIdent;
 
 public class Formatter {
 
@@ -55,7 +55,7 @@ public class Formatter {
 		}
 	}
 
-	public static boolean showCommiter(){
+	public static boolean showCommiter() {
 		return Formatter.showCommiter;
 	}
 }

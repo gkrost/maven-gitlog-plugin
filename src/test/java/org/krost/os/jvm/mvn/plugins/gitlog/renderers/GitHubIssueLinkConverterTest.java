@@ -1,9 +1,9 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
 import static org.junit.Assert.assertEquals;
+
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.junit.Test;
-import org.krost.os.jvm.mvn.plugins.gitlog.renderers.GitHubIssueLinkConverter;
 
 public class GitHubIssueLinkConverterTest {
 
@@ -71,8 +71,9 @@ public class GitHubIssueLinkConverterTest {
 	@Test
 	public void multipleIssueNumbersAreAllRendered() {
 		test("#1 Some commit message. Closes gh-10 it's true, also gh-11 and GH-13",
-				"<a href=\"https://github.com/gkrost/maven-gitlog-plugin/issues/1\">#1</a> Some commit message. Closes <a href=\"" + PREFIX + "10\">gh-10</a> it's true, also <a href=\""
-						+ PREFIX + "11\">gh-11</a> and <a href=\"" + PREFIX + "13\">GH-13</a>");
+				"<a href=\"https://github.com/gkrost/maven-gitlog-plugin/issues/1\">#1</a> Some commit message. Closes <a href=\""
+						+ PREFIX + "10\">gh-10</a> it's true, also <a href=\"" + PREFIX
+						+ "11\">gh-11</a> and <a href=\"" + PREFIX + "13\">GH-13</a>");
 	}
 
 	@Test
@@ -80,7 +81,8 @@ public class GitHubIssueLinkConverterTest {
 		GitHubIssueLinkConverter converter = new GitHubIssueLinkConverter(new SystemStreamLog(),
 				"https://github.com/gkrost/maven-gitlog-plugin/issues");
 		String actual = converter.formatCommitMessage("#10 Some commit message");
-		assertEquals("<a href=\"https://github.com/gkrost/maven-gitlog-plugin/issues/10\">#10</a> Some commit message", actual);
+		assertEquals("<a href=\"https://github.com/gkrost/maven-gitlog-plugin/issues/10\">#10</a> Some commit message",
+				actual);
 	}
 
 	private void test(String input, String expectedOutput) {

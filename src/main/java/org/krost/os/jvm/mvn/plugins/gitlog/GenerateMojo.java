@@ -1,5 +1,11 @@
 package org.krost.os.jvm.mvn.plugins.gitlog;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -8,27 +14,37 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.eclipse.jgit.lib.Repository;
-import org.krost.os.jvm.mvn.plugins.gitlog.filters.*;
-import org.krost.os.jvm.mvn.plugins.gitlog.renderers.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.krost.os.jvm.mvn.plugins.gitlog.filters.CommitFilter;
+import org.krost.os.jvm.mvn.plugins.gitlog.filters.CommiterFilter;
+import org.krost.os.jvm.mvn.plugins.gitlog.filters.MergeCommitFilter;
+import org.krost.os.jvm.mvn.plugins.gitlog.filters.PathCommitFilter;
+import org.krost.os.jvm.mvn.plugins.gitlog.filters.RegexpFilter;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.AsciidocReleaseNotesRenderer;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.AsciidocRenderer;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.BugzillaIssueLinkConverter;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.ChangeLogRenderer;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.Formatter;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.GitHubIssueLinkConverter;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.JiraIssueLinkConverter;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.JsonRenderer;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.MarkdownRenderer;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.MavenLoggerRenderer;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.MessageConverter;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.NullMessageConverter;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.PlainTextRenderer;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.SimpleHtmlRenderer;
 
 /**
  * Goal which generates a changelog based on commits made to the current git repo.
  */
-@Mojo(
-		name = "generate",
-		defaultPhase = LifecyclePhase.PREPARE_PACKAGE,
-		aggregator = true // the plugin should only run once against the aggregator pom
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.PREPARE_PACKAGE, aggregator = true // the plugin should only run
+																							// once against the
+																							// aggregator pom
 )
 public class GenerateMojo extends AbstractMojo {
 
 	/**
-	 * The directory to put the reports in.  Defaults to the project build directory (normally target).
+	 * The directory to put the reports in. Defaults to the project build directory (normally target).
 	 * <p>
 	 * When running as a reporting plugin, the output directory is fixed, set by the reporting cycle.
 	 */
@@ -41,7 +57,6 @@ public class GenerateMojo extends AbstractMojo {
 	@Parameter(defaultValue = "${project.name} v${project.version} git changelog")
 	private String reportTitle;
 
-
 	/**
 	 * If true, then a plain text changelog will be generated.
 	 */
@@ -53,7 +68,6 @@ public class GenerateMojo extends AbstractMojo {
 	 */
 	@Parameter(defaultValue = "changelog.txt")
 	private String plainTextChangeLogFilename;
-
 
 	/**
 	 * If true, then a markdown changelog will be generated.
@@ -118,9 +132,8 @@ public class GenerateMojo extends AbstractMojo {
 	private String simpleHTMLChangeLogFilename;
 
 	/**
-	 * If true, then an HTML changelog which contains only a table element will be generated.
-	 * This incomplete HTML page is suitable for inclusion in other webpages, for example you
-	 * may want to embed it in a wiki page.
+	 * If true, then an HTML changelog which contains only a table element will be generated. This incomplete HTML page
+	 * is suitable for inclusion in other webpages, for example you may want to embed it in a wiki page.
 	 */
 	@Parameter(defaultValue = "false")
 	private boolean generateHTMLTableOnlyChangeLog;
@@ -151,10 +164,9 @@ public class GenerateMojo extends AbstractMojo {
 
 	/**
 	 * Used to create links to your issue tracking system for HTML reports. If unspecified, it will try to use the value
-	 * specified in the issueManagement section of your project's POM.  The following values are supported:
-	 * a value containing the string "github" for the GitHub Issue tracking software;
-	 * a value containing the string "jira" for Jira tracking software.
-	 * Any other value will result in no links being made.
+	 * specified in the issueManagement section of your project's POM. The following values are supported: a value
+	 * containing the string "github" for the GitHub Issue tracking software; a value containing the string "jira" for
+	 * Jira tracking software. Any other value will result in no links being made.
 	 */
 	@Parameter(property = "project.issueManagement.system")
 	private String issueManagementSystem;
@@ -169,10 +181,8 @@ public class GenerateMojo extends AbstractMojo {
 	/**
 	 * Regexp pattern to extract the number from the message.
 	 * <p>
-	 * The default is: "Bug (\\d+)".
-	 * Group 1 (the number) is used in links, so "?:" must be used any non relevant group,
-	 * ex.:
-	 * (?:Bug|UPDATE|FIX|ADD|NEW|#) ?#?(\d+)
+	 * The default is: "Bug (\\d+)". Group 1 (the number) is used in links, so "?:" must be used any non relevant group,
+	 * ex.: (?:Bug|UPDATE|FIX|ADD|NEW|#) ?#?(\d+)
 	 */
 	@Parameter(defaultValue = "Bug (\\d+)")
 	private String bugzillaPattern;
@@ -180,8 +190,8 @@ public class GenerateMojo extends AbstractMojo {
 	/**
 	 * Regexp pattern to extract the number from the message.
 	 * <p>
-	 * The default is: "[A-Z]+-[0-9]+".
-	 * Group 1 (the number) is used in links, so "?:" must be used any non relevant group,
+	 * The default is: "[A-Z]+-[0-9]+". Group 1 (the number) is used in links, so "?:" must be used any non relevant
+	 * group,
 	 */
 	@Parameter(defaultValue = "[A-Z]+-[0-9]+")
 	private String jiraPattern;
@@ -246,7 +256,6 @@ public class GenerateMojo extends AbstractMojo {
 	@Parameter(defaultValue = "true")
 	private boolean mergeCommitFilter;
 
-
 	/**
 	 * asciidoc title level
 	 */
@@ -303,8 +312,7 @@ public class GenerateMojo extends AbstractMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		getLog().info("Generating gitlog in " + outputDirectory.getAbsolutePath()
-				+ " with title " + reportTitle);
+		getLog().info("Generating gitlog in " + outputDirectory.getAbsolutePath() + " with title " + reportTitle);
 
 		File f = outputDirectory;
 		if (!f.exists()) {
@@ -341,12 +349,12 @@ public class GenerateMojo extends AbstractMojo {
 		try {
 			repository = generator.openRepository();
 		} catch (IOException e) {
-			getLog().warn("Error opening git repository.  Is this Maven project hosted in a git repository? " +
-					"No changelog will be generated.", e);
+			getLog().warn("Error opening git repository.  Is this Maven project hosted in a git repository? "
+					+ "No changelog will be generated.", e);
 			return;
 		} catch (NoGitRepositoryException e) {
-			getLog().warn("This maven project does not appear to be in a git repository, " +
-					"therefore no git changelog will be generated.");
+			getLog().warn("This maven project does not appear to be in a git repository, "
+					+ "therefore no git changelog will be generated.");
 			return;
 		}
 
@@ -379,24 +387,32 @@ public class GenerateMojo extends AbstractMojo {
 			renderers.add(new PlainTextRenderer(getLog(), outputDirectory, plainTextChangeLogFilename, fullGitMessage));
 		}
 
-		if (generateSimpleHTMLChangeLog || generateHTMLTableOnlyChangeLog || generateMarkdownChangeLog ||
-				generateAsciidocChangeLog || generatAsciidocChangeLog || generateAsciidocReleaseNotes ||
-				generatAsciidocReleaseNotes) {
+		if (generateSimpleHTMLChangeLog || generateHTMLTableOnlyChangeLog || generateMarkdownChangeLog
+				|| generateAsciidocChangeLog || generatAsciidocChangeLog || generateAsciidocReleaseNotes
+				|| generatAsciidocReleaseNotes) {
 			MessageConverter messageConverter = getCommitMessageConverter();
 			if (generateSimpleHTMLChangeLog) {
-				renderers.add(new SimpleHtmlRenderer(getLog(), outputDirectory, simpleHTMLChangeLogFilename, fullGitMessage, messageConverter, false));
+				renderers.add(new SimpleHtmlRenderer(getLog(), outputDirectory, simpleHTMLChangeLogFilename,
+						fullGitMessage, messageConverter, false));
 			}
 			if (generateHTMLTableOnlyChangeLog) {
-				renderers.add(new SimpleHtmlRenderer(getLog(), outputDirectory, htmlTableOnlyChangeLogFilename, fullGitMessage, messageConverter, true));
+				renderers.add(new SimpleHtmlRenderer(getLog(), outputDirectory, htmlTableOnlyChangeLogFilename,
+						fullGitMessage, messageConverter, true));
 			}
 			if (generateMarkdownChangeLog) {
-				renderers.add(new MarkdownRenderer(getLog(), outputDirectory, markdownChangeLogFilename, fullGitMessage, messageConverter, markdownChangeLogAppend));
+				renderers.add(new MarkdownRenderer(getLog(), outputDirectory, markdownChangeLogFilename, fullGitMessage,
+						messageConverter, markdownChangeLogAppend));
 			}
 			if (generateAsciidocChangeLog || generatAsciidocChangeLog) {
-				renderers.add(new AsciidocRenderer(getLog(), outputDirectory, asciidocChangeLogFilename, fullGitMessage, messageConverter, asciidocHeading, asciidocTableView, asciidocTableViewHeader1, asciidocTableViewHeader2));
+				renderers.add(new AsciidocRenderer(getLog(), outputDirectory, asciidocChangeLogFilename, fullGitMessage,
+						messageConverter, asciidocHeading, asciidocTableView, asciidocTableViewHeader1,
+						asciidocTableViewHeader2));
 			}
 			if (generateAsciidocReleaseNotes || generatAsciidocReleaseNotes) {
-				renderers.add(new AsciidocReleaseNotesRenderer(getLog(), outputDirectory, asciidocReleaseNotesFilename, fullGitMessageReleaseNotes, messageConverter, asciidocHeadingReleaseNotes, asciidocTableViewReleaseNotes, asciidocTableViewHeader1ReleaseNotes, asciidocTableViewHeader2ReleaseNotes));
+				renderers.add(new AsciidocReleaseNotesRenderer(getLog(), outputDirectory, asciidocReleaseNotesFilename,
+						fullGitMessageReleaseNotes, messageConverter, asciidocHeadingReleaseNotes,
+						asciidocTableViewReleaseNotes, asciidocTableViewHeader1ReleaseNotes,
+						asciidocTableViewHeader2ReleaseNotes));
 			}
 		}
 
@@ -422,8 +438,7 @@ public class GenerateMojo extends AbstractMojo {
 				} else if (system.toLowerCase().contains("github")) {
 					converter = new GitHubIssueLinkConverter(getLog(), issueManagementUrl);
 				} else if (system.toLowerCase().contains("bugzilla")) {
-					converter = new BugzillaIssueLinkConverter(getLog(), issueManagementUrl,
-							bugzillaPattern);
+					converter = new BugzillaIssueLinkConverter(getLog(), issueManagementUrl, bugzillaPattern);
 				}
 			}
 		} catch (Exception ex) {

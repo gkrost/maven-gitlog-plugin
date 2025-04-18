@@ -1,7 +1,5 @@
 package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
 
-import org.apache.maven.plugin.logging.Log;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,11 +7,12 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.util.Scanner;
 
+import org.apache.maven.plugin.logging.Log;
+
 public abstract class FileRenderer implements ChangeLogRenderer {
 
 	protected Writer writer;
 	protected final Log log;
-
 
 	public FileRenderer(Log log, File targetFolder, String filename, boolean append) throws IOException {
 		this.log = log;
@@ -36,14 +35,14 @@ public abstract class FileRenderer implements ChangeLogRenderer {
 			}
 		}
 	}
-	
+
 	protected String convertStreamToString(InputStream is) {
 		Scanner scanner = new Scanner(is, "UTF-8");
 		String first = scanner.useDelimiter("\\A").next();
 		scanner.close();
 		return first;
 	}
-	
+
 	protected String loadResourceToString(String resourcePath) throws IOException {
 		InputStream templateStream = getClass().getResourceAsStream(resourcePath);
 		String s = convertStreamToString(templateStream);

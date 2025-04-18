@@ -1,5 +1,13 @@
 package org.krost.os.jvm.mvn.plugins.gitlog;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.maven.plugin.logging.Log;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.ObjectId;
@@ -11,10 +19,6 @@ import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.krost.os.jvm.mvn.plugins.gitlog.filters.CommitFilter;
 import org.krost.os.jvm.mvn.plugins.gitlog.renderers.ChangeLogRenderer;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
 
 class Generator {
 
@@ -38,11 +42,11 @@ class Generator {
 		log.debug("About to open git repository.");
 		Repository repository;
 		try {
-                    if ( gitdir == null ) {
-			repository = new RepositoryBuilder().findGitDir().build();
-                    } else {
-			repository = new RepositoryBuilder().findGitDir(gitdir).build();
-                    }
+			if (gitdir == null) {
+				repository = new RepositoryBuilder().findGitDir().build();
+			} else {
+				repository = new RepositoryBuilder().findGitDir(gitdir).build();
+			}
 		} catch (IllegalArgumentException iae) {
 			throw new NoGitRepositoryException();
 		}
@@ -59,7 +63,8 @@ class Generator {
 		generate(reportTitle, new Date(0l), "");
 	}
 
-	public void generate(String reportTitle, Date includeCommitsAfter, String includeCommitsAfterCommit) throws IOException {
+	public void generate(String reportTitle, Date includeCommitsAfter, String includeCommitsAfterCommit)
+			throws IOException {
 		for (ChangeLogRenderer renderer : renderers) {
 			renderer.renderHeader(reportTitle);
 		}
@@ -67,7 +72,7 @@ class Generator {
 		long dateInSecondsSinceEpoch = includeCommitsAfter.getTime() / 1000;
 		for (RevCommit commit : walk) {
 			int commitTimeInSecondsSinceEpoch = commit.getCommitTime();
-			if (isSameCommit(commit.toString(),includeCommitsAfterCommit)){
+			if (isSameCommit(commit.toString(), includeCommitsAfterCommit)) {
 				break;
 			}
 			if (dateInSecondsSinceEpoch < commitTimeInSecondsSinceEpoch) {
@@ -88,15 +93,14 @@ class Generator {
 		}
 		walk.dispose();
 
-
 		for (ChangeLogRenderer renderer : renderers) {
 			renderer.renderFooter();
 			renderer.close();
 		}
 	}
 
-	private boolean isSameCommit(String commitName, String commitId){
-		if (commitName != null && commitId != null && !commitName.isEmpty() && !commitId.isEmpty()){
+	private boolean isSameCommit(String commitName, String commitId) {
+		if (commitName != null && commitId != null && !commitName.isEmpty() && !commitId.isEmpty()) {
 			// Get commit id from commit name
 			return commitName.split(" ")[1].contains(commitId);
 		}
@@ -117,15 +121,15 @@ class Generator {
 		RevWalk walk = new RevWalk(repository);
 		ObjectId head = repository.resolve("HEAD");
 		if (head != null) {
-			// if head is null, it means there are no commits in the repository.  The walk will be empty.
+			// if head is null, it means there are no commits in the repository. The walk will be empty.
 			RevCommit mostRecentCommit = walk.parseCommit(head);
 			walk.markStart(mostRecentCommit);
 		}
 		return walk;
 	}
 
-
-	private Map<String, List<RevTag>> createCommitIDToTagsMap(Repository repository, RevWalk revWalk) throws IOException {
+	private Map<String, List<RevTag>> createCommitIDToTagsMap(Repository repository, RevWalk revWalk)
+			throws IOException {
 		Map<String, Ref> allTags = repository.getTags();
 
 		Map<String, List<RevTag>> revTags = new HashMap<String, List<RevTag>>();
@@ -145,6 +149,5 @@ class Generator {
 
 		return revTags;
 	}
-
 
 }

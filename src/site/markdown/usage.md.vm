@@ -22,7 +22,7 @@ Currently only Jira, GitHub and Bugzilla issue tracking is supported.
 
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/danielflower/maven-gitlog-plugin/issues</url>
+		<url>https://github.com/gkrost/maven-gitlog-plugin/issues</url>
 	</issueManagement>
 
 
@@ -68,7 +68,7 @@ The following example shows all the possible configuration values with default v
 			<generateJSONChangeLog>true</generateJSONChangeLog>
 			<jsonChangeLogFilename>changelog-${project.version}.json</jsonChangeLogFilename>
 			<issueManagementSystem>GitHub issue tracker</issueManagementSystem>
-			<issueManagementUrl>https://github.com/danielflower/maven-gitlog-plugin/issues</issueManagementUrl>
+			<issueManagementUrl>https://github.com/gkrost/maven-gitlog-plugin/issues</issueManagementUrl>
 			<fullGitMessage>true</fullGitMessage>
 			<dateFormat>yyyy-MM-dd HH:mm:ss Z</dateFormat>
 			<includeCommitsAfter>2014-04-01 00:00:00.0 AM</includeCommitsAfter>

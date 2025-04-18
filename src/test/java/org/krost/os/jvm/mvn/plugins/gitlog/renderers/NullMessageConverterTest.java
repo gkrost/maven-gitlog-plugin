@@ -1,0 +1,17 @@
+package org.krost.os.jvm.mvn.plugins.gitlog.renderers;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import org.krost.os.jvm.mvn.plugins.gitlog.renderers.NullMessageConverter;
+
+public class NullMessageConverterTest {
+
+	@Test
+	public void thatWhichGoesInIsThatWhichComesOutAgain() {
+		NullMessageConverter converter = new NullMessageConverter();
+		String someText = "Yeah £1 #1 GH-1 yeah yeah";
+		assertEquals(someText, converter.formatCommitMessage(someText));
+	}
+
+}

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.danielflower.mavenplugins</groupId>
 	<artifactId>gitlog-maven-plugin</artifactId>
@@ -30,19 +28,21 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git@github.com/danielflower/maven-gitlog-plugin.git</connection>
-		<developerConnection>scm:git:git@github.com:/danielflower/maven-gitlog-plugin.git</developerConnection>
-		<url>git://github.com/danielflower/maven-gitlog-plugin.git</url>
+		<connection>scm:git:git@github.com/gkrost/maven-gitlog-plugin.git</connection>
+<!--		<developerConnection>scm:git:git@github.com:/danielflower/maven-gitlog-plugin.git</developerConnection>-->
+		<url>${project.url}</url>
+		<tag>HEAD</tag>
 	</scm>
+	
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/danielflower/maven-gitlog-plugin/issues</url>
+		<url>${project.url}/issues</url>
 	</issueManagement>
 	<ciManagement>
 		<system>GitHub Actions</system>
-		<url>https://github.com/danielflower/maven-gitlog-plugin/actions</url>
+		<url>${project.url}/actions</url>
 	</ciManagement>
-	<distributionManagement>
+<!--	<distributionManagement>
 		<repository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
@@ -51,22 +51,47 @@
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
-	</distributionManagement>
+	</distributionManagement>-->
 	<properties>
-		<github.global.server>github</github.global.server>
-		<plugin.goal.prefix>gitlog</plugin.goal.prefix>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<plugin.goal.prefix>gitlog</plugin.goal.prefix>
+		<github.global.server>github</github.global.server>
+		<maven.api.version>3.9.8</maven.api.version>
+		<maven.plugin.annotations.version>3.11</maven.plugin.annotations.version>
+		<jgit.version>6.8.0.202311291450-r</jgit.version>
+		<commons-lang3.version>3.14.0</commons-lang3.version>
+		<junit.version>4.13.2</junit.version>
+		<hamcrest.version>1.3</hamcrest.version>
+		<maven.reporting.api.version>3.1.1</maven.reporting.api.version>
+		<doxia.sink.api.version>1.12.0</doxia.sink.api.version>
+		<xml-apis.version>2.0.2</xml-apis.version>
+		<multi-module-release.version>3.0.0</multi-module-release.version>
+		<maven.plugin.plugin.version>3.12.0</maven.plugin.plugin.version>
+		<maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
+		<maven.dependency.plugin.version>3.7.1</maven.dependency.plugin.version>
+		<maven.site.plugin.version>3.12.1</maven.site.plugin.version>
+		<doxia.module.markdown.version>1.12.0</doxia.module.markdown.version>
+		<maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+		<maven.surefire.report.plugin.version>3.2.5</maven.surefire.report.plugin.version>
+		<maven.project.info.reports.plugin.version>3.5.0</maven.project.info.reports.plugin.version>
+		<nexus.staging.plugin.version>1.6.13</nexus.staging.plugin.version>
+		<maven.source.plugin.version>3.3.1</maven.source.plugin.version>
+		<maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
+		<maven.gpg.plugin.version>3.2.1</maven.gpg.plugin.version>
+		<github.site.plugin.version>0.12</github.site.plugin.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
-			<version>3.8.5</version>
+			<version>${maven.api.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.maven.plugin-tools</groupId>
-			<artifactId>maven-plugin-annotations</artifactId>
-			<version>3.6.4</version>
+		    <groupId>org.apache.maven.plugin-tools</groupId>
+		    <artifactId>maven-plugin-annotations</artifactId>
+		    <version>3.15.1</version>
+		    <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.madgag</groupId>
@@ -82,34 +107,31 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
+			<version>${commons-lang3.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13.2</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-core</artifactId>
-			<version>1.3</version>
+			<version>${hamcrest.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.reporting</groupId>
 			<artifactId>maven-reporting-api</artifactId>
-			<version>3.1.0</version>
+			<version>${maven.reporting.api.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.doxia</groupId>
 			<artifactId>doxia-sink-api</artifactId>
-			<version>1.11.1</version>
-		</dependency>
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<version>2.0.2</version>
+			<version>${doxia.sink.api.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -117,7 +139,7 @@
 			<plugin>
 				<groupId>com.github.danielflower.mavenplugins</groupId>
 				<artifactId>multi-module-maven-release-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>${multi-module-release.version}</version>
 				<configuration>
 					<releaseGoals>
 						<releaseGoal>clean</releaseGoal>
@@ -130,39 +152,25 @@
 					</releaseProfiles>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-plugin-plugin</artifactId>
-				<version>3.4</version>
-				<executions>
-					<execution>
-						<id>default-descriptor</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>descriptor</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>generated-helpmojo</id>
-						<goals>
-							<goal>helpmojo</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<goalPrefix>${plugin.goal.prefix}</goalPrefix>
-				</configuration>
-			</plugin>
+		    <plugin>
+		      <groupId>org.apache.maven.plugins</groupId>
+		      <artifactId>maven-plugin-plugin</artifactId>
+		      <version>3.13.1</version> <!-- Add this line -->
+		      <configuration>
+   		      <goalPrefix>changelog</goalPrefix>
+		      </configuration>
+		    </plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.9</version>
+				<version>${maven.dependency.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>analyze</id>
@@ -171,7 +179,7 @@
 						</goals>
 						<configuration>
 							<failOnWarning>true</failOnWarning>
-							<ignoreNonCompile>true</ignoreNonCompile>
+							<ignoreUsedDeclaredWhileFiltering>true</ignoreUsedDeclaredWhileFiltering>
 							<outputXML>true</outputXML>
 						</configuration>
 					</execution>
@@ -179,14 +187,21 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.4</version>
+				<version>${maven.site.plugin.version}</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.apache.maven.doxia</groupId>
 						<artifactId>doxia-module-markdown</artifactId>
-						<version>1.6</version>
+						<version>${doxia.module.markdown.version}</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.plugin.version}</version>
+				<configuration>
+					</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -194,18 +209,18 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-plugin-plugin</artifactId>
-				<version>3.4</version>
+				<version>${maven.plugin.plugin.version}</version>
 				<configuration>
 					<goalPrefix>${plugin.goal.prefix}</goalPrefix>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.18.1</version>
+				<version>${maven.surefire.report.plugin.version}</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.8</version>
+				<version>${maven.project.info.reports.plugin.version}</version>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -228,7 +243,7 @@
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.8</version>
+						<version>${nexus.staging.plugin.version}</version>
 						<extensions>true</extensions>
 						<configuration>
 							<serverId>ossrh</serverId>
@@ -239,7 +254,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<version>3.2.1</version>
+						<version>${maven.source.plugin.version}</version>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -252,9 +267,9 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.3.1</version>
+						<version>${maven.javadoc.plugin.version}</version>
 						<configuration>
-							<source>8</source>
+							<source>${java.version}</source>
 							<detectJavaApiLink>false</detectJavaApiLink>
 						</configuration>
 						<executions>
@@ -272,7 +287,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.6</version>
+						<version>${maven.gpg.plugin.version}</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -292,7 +307,7 @@
 					<plugin>
 						<groupId>com.github.github</groupId>
 						<artifactId>site-maven-plugin</artifactId>
-						<version>0.11</version>
+						<version>${github.site.plugin.version}</version>
 						<executions>
 							<execution>
 								<phase>site</phase>

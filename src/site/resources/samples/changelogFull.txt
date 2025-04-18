@@ -1,7 +1,7 @@
 Maven GitLog Plugin changelog
 
 2015-03-12 20:54:01 +0800    Add escapes for tab "\t", backspace "\b", form feed "\f" and carriage return "\r", may create invalid JSON that can't be parsed otherwise.
- (Kristoffer Lundén)
+ (Kristoffer Lundï¿½n)
 
 maven-gitlog-plugin-1.7.0
 2014-05-25 20:53:01 +0800    Updated the version in preparation of release
@@ -71,9 +71,9 @@ maven-gitlog-plugin-1.5.0
 Added test cases for the markdown renderer and the markdown link
 converter.
 OPEN - task 10: Generate markdown formatted gitlog 
-https://github.com/danielflower/maven-gitlog-plugin/issues/issue/10 (Gerd Zanker)
+https://github.com/gkrost/maven-gitlog-plugin/issues/issue/10 (Gerd Zanker)
 2013-01-05 21:12:46 +0800    OPEN - task 10: Generate markdown formatted gitlog 
-https://github.com/danielflower/maven-gitlog-plugin/issues/issue/10
+https://github.com/gkrost/maven-gitlog-plugin/issues/issue/10
 Implemented markdown renderer and simple tests.
 Updated readme with new available maven plugin parameters. (Gerd Zanker)
 

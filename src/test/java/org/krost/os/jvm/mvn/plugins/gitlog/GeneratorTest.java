@@ -43,7 +43,7 @@ public class GeneratorTest {
 
 		String regexp = ".*\\b(without|Upgraded)\\b.*";
 
-		List<CommitFilter> commitFilters = new ArrayList<CommitFilter>(Defaults.COMMIT_FILTERS);
+		List<CommitFilter> commitFilters = new ArrayList<>(Defaults.COMMIT_FILTERS);
 		commitFilters.add(new RegexpFilter(regexp));
 		generateReport(log, renderer, null, commitFilters);
 	}

@@ -17,6 +17,7 @@ import org.krost.os.jvm.mvn.plugins.gitlog.renderers.MavenLoggerRenderer;
 @Mojo(name = "show")
 public class ShowMojo extends AbstractMojo {
 
+	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 
 		List<ChangeLogRenderer> renderers = Arrays.<ChangeLogRenderer>asList(new MavenLoggerRenderer(getLog()));

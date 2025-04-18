@@ -19,7 +19,7 @@ class Defaults {
 	public static final List<CommitFilter> COMMIT_FILTERS;
 
 	static {
-		COMMIT_FILTERS = new ArrayList<CommitFilter>();
+		COMMIT_FILTERS = new ArrayList<>();
 		COMMIT_FILTERS.addAll(DEFAULT_COMMIT_FILTERS);
 
 		Iterator<CommitFilter> it = ServiceLoader.load(CommitFilter.class).iterator();

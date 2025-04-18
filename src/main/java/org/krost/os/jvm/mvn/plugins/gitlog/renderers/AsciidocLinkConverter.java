@@ -7,7 +7,7 @@ import org.apache.maven.plugin.logging.Log;
 
 /**
  * Helper class to convert a HTML link into an Asciidoc link.
- * 
+ *
  * It searches for a <a href="...URL...">...Text...</a> and the URL and text is used to build afterwards the Asciidoc
  * link. The Asciidoc links goes like ...URL...[...Text...].
  *

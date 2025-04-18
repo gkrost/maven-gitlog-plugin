@@ -30,7 +30,7 @@ class Generator {
 
 	public Generator(List<ChangeLogRenderer> renderers, List<CommitFilter> commitFilters, Log log) {
 		this.renderers = renderers;
-		this.commitFilters = (commitFilters == null) ? new ArrayList<CommitFilter>() : commitFilters;
+		this.commitFilters = (commitFilters == null) ? new ArrayList<>() : commitFilters;
 		this.log = log;
 	}
 
@@ -132,14 +132,14 @@ class Generator {
 			throws IOException {
 		Map<String, Ref> allTags = repository.getTags();
 
-		Map<String, List<RevTag>> revTags = new HashMap<String, List<RevTag>>();
+		Map<String, List<RevTag>> revTags = new HashMap<>();
 
 		for (Ref ref : allTags.values()) {
 			try {
 				RevTag revTag = revWalk.parseTag(ref.getObjectId());
 				String commitID = revTag.getObject().getId().getName();
 				if (!revTags.containsKey(commitID)) {
-					revTags.put(commitID, new ArrayList<RevTag>());
+					revTags.put(commitID, new ArrayList<>());
 				}
 				revTags.get(commitID).add(revTag);
 			} catch (IncorrectObjectTypeException e) {

@@ -58,6 +58,7 @@ public class AsciidocRenderer extends FileRenderer {
 		asciidocLinkConverter = new AsciidocLinkConverter(log);
 	}
 
+	@Override
 	public void renderHeader(String reportTitle) throws IOException {
 
 		if (reportTitle != null && reportTitle.length() > 0) {
@@ -75,6 +76,7 @@ public class AsciidocRenderer extends FileRenderer {
 		}
 	}
 
+	@Override
 	public void renderTag(RevTag tag) throws IOException {
 		if (isAsciidocTableView) {
 			if (!previousWasTag) {
@@ -96,6 +98,7 @@ public class AsciidocRenderer extends FileRenderer {
 		}
 	}
 
+	@Override
 	public void renderCommit(RevCommit commit) throws IOException {
 		String message = null;
 		// use the message formatter to get a HTML hyperlink
@@ -122,6 +125,7 @@ public class AsciidocRenderer extends FileRenderer {
 		previousWasTag = false;
 	}
 
+	@Override
 	public void renderFooter() throws IOException {
 		if (isAsciidocTableView) {
 			writer.write(NEW_LINE);

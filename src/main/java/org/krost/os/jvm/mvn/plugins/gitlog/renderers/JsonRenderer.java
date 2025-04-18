@@ -15,7 +15,7 @@ public class JsonRenderer extends FileRenderer {
 	protected StringBuilder json = new StringBuilder();
 	private final boolean fullGitMessage;
 	private boolean firstCommit = true;
-	private Collection<RevTag> tags = new ArrayList<RevTag>();
+	private Collection<RevTag> tags = new ArrayList<>();
 
 	public JsonRenderer(Log log, File targetFolder, String filename, boolean fullGitMessage) throws IOException {
 		super(log, targetFolder, filename, false);
@@ -43,7 +43,7 @@ public class JsonRenderer extends FileRenderer {
 		} else {
 			message = commit.getShortMessage();
 		}
-		StringBuffer tagsJson = new StringBuffer();
+		StringBuilder tagsJson = new StringBuilder();
 		boolean firstTag = true;
 		for (RevTag tag : this.tags) {
 			if (firstTag) {

@@ -19,12 +19,14 @@ public class MavenLoggerRenderer implements ChangeLogRenderer {
 		this.log = log;
 	}
 
+	@Override
 	public void renderHeader(String reportTitle) throws IOException {
 		log.info("*********************************************");
 		log.info(reportTitle);
 		log.info("*********************************************");
 	}
 
+	@Override
 	public void renderTag(RevTag tag) throws IOException {
 		if (!previousWasTag) {
 			log.info("");
@@ -33,17 +35,20 @@ public class MavenLoggerRenderer implements ChangeLogRenderer {
 		previousWasTag = true;
 	}
 
+	@Override
 	public void renderCommit(RevCommit commit) throws IOException {
 		log.info(Formatter.formatDateTime(commit.getCommitTime()) + " " + commit.getShortMessage() + " "
 				+ Formatter.formatCommiter(commit.getCommitterIdent()));
 		previousWasTag = false;
 	}
 
+	@Override
 	public void renderFooter() throws IOException {
 		log.info("");
 		log.info("*********************************************");
 	}
 
+	@Override
 	public void close() {
 	}
 }

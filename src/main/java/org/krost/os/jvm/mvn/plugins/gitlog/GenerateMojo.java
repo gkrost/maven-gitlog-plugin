@@ -327,7 +327,7 @@ public class GenerateMojo extends AbstractMojo {
 			return;
 		}
 
-		List<CommitFilter> commitFilters = new ArrayList<CommitFilter>(Defaults.COMMIT_FILTERS);
+		List<CommitFilter> commitFilters = new ArrayList<>(Defaults.COMMIT_FILTERS);
 
 		if (this.mergeCommitFilter) {
 			commitFilters.add(new MergeCommitFilter());
@@ -381,7 +381,7 @@ public class GenerateMojo extends AbstractMojo {
 	}
 
 	private List<ChangeLogRenderer> createRenderers() throws IOException {
-		ArrayList<ChangeLogRenderer> renderers = new ArrayList<ChangeLogRenderer>();
+		ArrayList<ChangeLogRenderer> renderers = new ArrayList<>();
 
 		if (generatePlainTextChangeLog) {
 			renderers.add(new PlainTextRenderer(getLog(), outputDirectory, plainTextChangeLogFilename, fullGitMessage));

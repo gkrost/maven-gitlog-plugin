@@ -19,6 +19,7 @@ public class PlainTextRenderer extends FileRenderer {
 		this.fullGitMessage = fullGitMessage;
 	}
 
+	@Override
 	public void renderHeader(String reportTitle) throws IOException {
 		if (reportTitle != null && reportTitle.length() > 0) {
 			writer.write(reportTitle);
@@ -27,6 +28,7 @@ public class PlainTextRenderer extends FileRenderer {
 		}
 	}
 
+	@Override
 	public void renderTag(RevTag tag) throws IOException {
 		if (!previousWasTag) {
 			writer.write(NEW_LINE);
@@ -36,6 +38,7 @@ public class PlainTextRenderer extends FileRenderer {
 		previousWasTag = true;
 	}
 
+	@Override
 	public void renderCommit(RevCommit commit) throws IOException {
 		String message = null;
 		if (fullGitMessage) {
@@ -49,6 +52,7 @@ public class PlainTextRenderer extends FileRenderer {
 		previousWasTag = false;
 	}
 
+	@Override
 	public void renderFooter() throws IOException {
 	}
 

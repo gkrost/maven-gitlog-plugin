@@ -21,6 +21,7 @@ public abstract class FileRenderer implements ChangeLogRenderer {
 		writer = new FileWriter(file, append);
 	}
 
+	@Override
 	public void close() {
 		if (writer != null) {
 			try {

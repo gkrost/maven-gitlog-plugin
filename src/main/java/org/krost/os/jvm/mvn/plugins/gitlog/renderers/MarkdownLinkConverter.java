@@ -7,7 +7,7 @@ import org.apache.maven.plugin.logging.Log;
 
 /**
  * Helper class to convert a HTML link into a markdown link.
- * 
+ *
  * It searches for a <a href="...URL...">...Text...</a> and the URL and text is used to build afterwards the markdown
  * link. The markdown links goes like [...Text...](...URL...).
  *

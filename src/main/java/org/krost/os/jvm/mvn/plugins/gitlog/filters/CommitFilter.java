@@ -5,10 +5,10 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public interface CommitFilter {
 
 	/**
-	 * Returns true if the commit should be rendered; otherwise false.
+	 * Determines whether the commit should be rendered or not.
 	 *
-	 * @param commit The commit to render
-	 * @return Returns true if the commit should be rendered; false if it should be skipped
+	 * @param commit The commit to check.
+	 * @return true if the commit should be rendered, false otherwise.
 	 */
 	boolean renderCommit(RevCommit commit);
 

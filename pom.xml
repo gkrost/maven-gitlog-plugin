@@ -49,8 +49,6 @@
 		<plugin.goal.prefix>gitlog</plugin.goal.prefix>
 		<github.global.server>github</github.global.server>
 		<maven.compiler.release>8</maven.compiler.release>
-<!--		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>-->
 		<jdk.build.version>11</jdk.build.version>
 		<maven.api.version>3.9.9</maven.api.version>
 		<maven.plugin.annotations.version>3.11</maven.plugin.annotations.version>

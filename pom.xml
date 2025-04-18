@@ -59,7 +59,7 @@
 		<junit.version>4.13.2</junit.version>
 		<hamcrest.version>1.3</hamcrest.version>
 		<maven.reporting.api.version>4.0.0</maven.reporting.api.version>
-		<doxia.sink.api.version>1.12.0</doxia.sink.api.version>
+		<doxia.sink.api.version>2.0.0</doxia.sink.api.version>
 		<xml-apis.version>2.0.2</xml-apis.version>
 		<multi-module-release.version>3.0.0</multi-module-release.version>
 		<maven.plugin.plugin.version>3.12.0</maven.plugin.plugin.version>

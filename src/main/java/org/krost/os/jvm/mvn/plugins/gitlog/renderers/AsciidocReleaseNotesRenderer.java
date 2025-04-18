@@ -10,29 +10,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 
 /**
- * Asciidoc Renderer to get a*.md file.
- * <p>
- * The created asciidoc file will have - a document title (level 0), - bold tags - and commits in each line.
- * <p>
- * Asciidoc reference is http://asciidoctor.org/docs/
- * <p>
- * Output Example: = Maven GitLog Plugin changelog *maven-gitlog-plugin-1.4.11* 2012-03-17 07:33:55 +0100 Updated maven
- * version in docs (Daniel Flower) ...
- * <p>
- * Table View example
- * </p>
- * == Maven GitLog Plugin changelog
- * <p>
- * |=== |Date | Merge |2017-11-23 07:34:02 +0100 |asciidoc also als table view (Marcel Widmer) + |2017-11-22 12:24:41
- * +0100 |update README (Marcel Widmer) + |2017-11-22 12:19:21 +0100 |Merge Commits Only (Marcel Widmer) +
- * <p>
- * |=== == *gitlog-maven-plugin-1.13.3* +
- * <p>
- * |=== |Date | Merge |2016-09-24 08:40:27 +0200 |Bumped release plugin version (Daniel Flower) + |2016-09-24 08:38:49
- * +0200 |Merge pull request #42 from orevial/asciidoc-support (GitHub) + |2016-09-22 16:33:27 +0200 |Add Asciidoc
- * converter support (Olivier Revial) +
- * <p>
- * |===
+ * AsciidocReleaseNotesRenderer is a .md renderer for generating release notes in Asciidoc format. 
+ * [http://asciidoctor.org/docs/]
  */
 public class AsciidocReleaseNotesRenderer extends FileRenderer {
 

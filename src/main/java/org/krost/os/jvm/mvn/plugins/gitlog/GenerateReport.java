@@ -8,7 +8,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
-import org.codehaus.doxia.sink.Sink;
+import org.codehaus.doxia.sink.Sink; // TODO deprecated, use org.apache.maven.doxia.sink.Sink instead
 
 /**
  * Goal which generates a changelog based on commits made to the current git repo.
@@ -69,7 +69,6 @@ public class GenerateReport extends GenerateMojo implements MavenReport {
 		return true;
 	}
 
-	@Override
 	public void generate(Sink sink, Locale locale) throws MavenReportException {
 		// TODO Auto-generated method stub
 

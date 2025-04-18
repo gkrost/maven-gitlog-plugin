@@ -24,29 +24,4 @@ jobs:
 
       - name: Display dependency updates
         run: mvn versions:display-dependency-updates
-# .github/workflows/dependency-check.yml
-name: Maven Dependency Check
-
-on:
-  workflow_dispatch:  # manually triggerable
-  push:
-    branches: [main]
-  schedule:
-    - cron: '0 5 * * 1'  # every Monday at 05:00 UTC
-
-jobs:
-  check-dependencies:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Display dependency updates
-        run: mvn versions:display-dependency-updates
+		

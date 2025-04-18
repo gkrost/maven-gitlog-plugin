@@ -9,7 +9,6 @@
 	<description>Generates json, xml, md and other formats from your git based mvn project</description>
 	<url>https://github.com/gkrost/maven-gitlog-plugin</url>
 	<inceptionYear>2025</inceptionYear>
-
 	<developers>
 		<developer>
 			<id>gkrost</id>
@@ -87,17 +86,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.madgag</groupId>
-			<artifactId>org.eclipse.jgit</artifactId>
-			<version>3.2.0.0.2-UNOFFICIAL-ROBERTO-RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>jsch</artifactId>
-					<groupId>com.jcraft</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang3.version}</version>
@@ -126,10 +114,17 @@
 			<version>${doxia.sink.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit -->
+		<dependency>
+		    <groupId>org.eclipse.jgit</groupId>
+		    <artifactId>org.eclipse.jgit</artifactId>
+		    <version>5.13.3.202401111512-r</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin> <!-- TODO left for incubation ;-) -->
+			<plugin>
+				<!-- TODO left for incubation ;-) -->
 				<groupId>com.github.danielflower.mavenplugins</groupId>
 				<artifactId>multi-module-maven-release-plugin</artifactId>
 				<version>${multi-module-release.version}</version>
@@ -318,14 +313,11 @@
 			</build>
 		</profile>
 	</profiles>
-	
-		<licenses>
+	<licenses>
 		<license>
 			<name>MIT License</name>
 			<url>https://opensource.org/licenses/mit-license.php</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
-	
 </project>

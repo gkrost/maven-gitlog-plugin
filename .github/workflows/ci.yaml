@@ -4,6 +4,8 @@ on: [push, pull_request]
 permissions:
   contents: read
   pull-requests: write
+  id-token: write
+  attestations: write
    
 jobs:
   build:
@@ -36,3 +38,9 @@ jobs:
 
       - name: Build with Maven on JDK ${{ matrix.java }}
         run: mvn --batch-mode --update-snapshots verify
+
+      - name: Attest Build Provenance
+        uses: slsa-framework/github-actions/attest@v2
+        with:
+          artifact_path: target/*.jar
+          provenance_name: build.provenance

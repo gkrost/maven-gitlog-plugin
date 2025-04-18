@@ -1,58 +1,40 @@
-name: Build and Test (Java)
+name: Build and test
 
+on: [push, pull_request]
 permissions:
   contents: read
   pull-requests: write
-
-on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
-
+   
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [8, 17]
+        java: [ 8, 17 ]
     name: Java ${{ matrix.java }} build
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
       - name: git
         run: |
           git --version
-          git describe
+          git describe --always
 
       - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
-          distribution: temurin
+          distribution: 'temurin'
 
       - name: Cache the Maven packages to speed up build
         uses: actions/cache@v4
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}-${{ matrix.java }}
-          restore-keys: |
-            ${{ runner.os }}-m2-${{ matrix.java }}
-            ${{ runner.os }}-m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven on JDK ${{ matrix.java }}
         run: mvn --batch-mode --update-snapshots verify
-
-      - name: Archive Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: target/surefire-reports/
-
-      - name: Run static analysis
-        run: mvn checkstyle:check
+			 
+					 

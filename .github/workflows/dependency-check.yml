@@ -24,4 +24,4 @@ jobs:
 
       - name: Display dependency updates
         run: mvn versions:display-dependency-updates
-        
+		

@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.danielflower.mavenplugins</groupId>
+	<groupId>org.krost.os.jvm.mvn.plugins</groupId>
 	<artifactId>gitlog-maven-plugin</artifactId>
-	<version>1.14-SNAPSHOT</version>
+	<version>0.9-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
-	<name>Maven Git Log Plugin</name>
-	<description>Generates a changelog based on commits to a git repository in text and HTML format showing the changes
-		that are included in each version. A possible use of this is to include these changelogs when packaging your
-		maven project so that you have an accurate list of commits that the current package includes.
-	</description>
-	<url>https://github.com/danielflower/maven-gitlog-plugin</url>
-	<inceptionYear>2011</inceptionYear>
-	<licenses>
-		<license>
-			<name>MIT License</name>
-			<url>https://opensource.org/licenses/mit-license.php</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+	<name>Maven git history/changelog Plugin</name>
+	<description>Generates json, xml, md and other formats from your git based mvn project</description>
+	<url>https://github.com/gkrost/maven-gitlog-plugin</url>
+	<inceptionYear>2025</inceptionYear>
+
 	<developers>
 		<developer>
-			<id>danielflower</id>
-			<name>Daniel Flower</name>
-			<url>https://github.com/danielflower/</url>
-			<timezone>8</timezone>
+			<id>gkrost</id>
+			<email>gernot@krost.org</email>
+			<name>Gernot Krost</name>
+			<url>https://github.com/gkrost</url>
 		</developer>
 	</developers>
+	<prerequisites>
+		<maven>3.6.3</maven>
+	</prerequisites>
 	<scm>
 		<connection>scm:git:git@github.com/gkrost/maven-gitlog-plugin.git</connection>
-<!--		<developerConnection>scm:git:git@github.com:/danielflower/maven-gitlog-plugin.git</developerConnection>-->
+		<developerConnection>scm:git:git@github.com/gkrost/maven-gitlog-plugin.git</developerConnection>
 		<url>${project.url}</url>
 		<tag>HEAD</tag>
 	</scm>
-	
 	<issueManagement>
 		<system>GitHub</system>
 		<url>${project.url}/issues</url>
@@ -42,7 +35,7 @@
 		<system>GitHub Actions</system>
 		<url>${project.url}/actions</url>
 	</ciManagement>
-<!--	<distributionManagement>
+	<!--	<distributionManagement>
 		<repository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
@@ -88,10 +81,10 @@
 			<version>${maven.api.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.maven.plugin-tools</groupId>
-		    <artifactId>maven-plugin-annotations</artifactId>
-		    <version>4.0.0-beta-1</version>
-		    <scope>provided</scope>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>4.0.0-beta-1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.madgag</groupId>
@@ -136,7 +129,7 @@
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
+			<plugin> <!-- TODO left for incubation ;-) -->
 				<groupId>com.github.danielflower.mavenplugins</groupId>
 				<artifactId>multi-module-maven-release-plugin</artifactId>
 				<version>${multi-module-release.version}</version>
@@ -152,14 +145,15 @@
 					</releaseProfiles>
 				</configuration>
 			</plugin>
-		    <plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-plugin-plugin</artifactId>
-		      <version>3.13.1</version> <!-- Add this line -->
-		      <configuration>
-   		      <goalPrefix>changelog</goalPrefix>
-		      </configuration>
-		    </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>3.13.1</version>
+				<!-- Add this line -->
+				<configuration>
+					<goalPrefix>changelog</goalPrefix>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven.compiler.plugin.version}</version>
@@ -324,4 +318,14 @@
 			</build>
 		</profile>
 	</profiles>
+	
+		<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	
 </project>

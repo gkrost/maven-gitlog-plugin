@@ -1,3 +1,5 @@
+[![Build and test](https://github.com/gkrost/maven-gitlog-plugin/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/gkrost/maven-gitlog-plugin/actions/workflows/ci.yaml) [![Build and test](https://github.com/gkrost/maven-gitlog-plugin/actions/workflows/ci.yaml/badge.svg?branch=develop)](https://github.com/gkrost/maven-gitlog-plugin/actions/workflows/ci.yaml)
+
 Overview
 ========
 

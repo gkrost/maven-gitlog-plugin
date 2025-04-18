@@ -73,7 +73,7 @@
 		<nexus.staging.plugin.version>1.6.13</nexus.staging.plugin.version>
 		<maven.source.plugin.version>3.3.1</maven.source.plugin.version>
 		<maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
-		<maven.gpg.plugin.version>3.2.1</maven.gpg.plugin.version>
+		<maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
 		<github.site.plugin.version>0.12</github.site.plugin.version>
 		<java.version>11</java.version>
 	</properties>

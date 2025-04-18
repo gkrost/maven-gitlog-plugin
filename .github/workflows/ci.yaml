@@ -31,7 +31,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}-${{ matrix.java }}
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven on JDK ${{ matrix.java }}

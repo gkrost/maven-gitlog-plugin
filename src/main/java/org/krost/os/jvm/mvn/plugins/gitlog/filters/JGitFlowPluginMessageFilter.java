@@ -3,8 +3,7 @@ package org.krost.os.jvm.mvn.plugins.gitlog.filters;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
- * Removes messages added by the Maven release plugin as those just tend to add noise. Note that the tag name generated
- * is still displayed.
+ * Filter to exclude commits that are related to the JGitFlow plugin.
  */
 public class JGitFlowPluginMessageFilter implements CommitFilter {
 	@Override

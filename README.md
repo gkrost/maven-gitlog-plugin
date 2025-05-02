@@ -1,11 +1,17 @@
 Overview
-========
+-
+***This plugin allows the creation of text and HTML changelogs based on the git history .***
 
-This plugin allows the creation of text and HTML changelogs based on the git log. During the Maven packaging
+CI -
+**main** [![Build and test](https://github.com/gkrost/maven-gitlog-plugin/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/gkrost/maven-gitlog-plugin/actions/workflows/ci.yaml) 
+**dev** [![Build and test](https://github.com/gkrost/maven-gitlog-plugin/actions/workflows/ci.yaml/badge.svg?branch=develop)](https://github.com/gkrost/maven-gitlog-plugin/actions/workflows/ci.yaml)
+-
+
+During the Maven packaging
 phase this plugin can generate plaintext and HTML reports showing all the commits (with tags) from the local git
 repository.  These text files can then be sent to a web server or included during packaging.
 
-Using as a reporting plugin (with maven 3.1+), the site generation will include the generated gitlog.
+Using as a reporting plugin (with maven 3.3.6+), the site generation will include the generated gitlog.
 In this case, the outputDirectory parameter can not be set.
 
 Note: when using together with the reporting plugin named *changelog*, it is advised to change

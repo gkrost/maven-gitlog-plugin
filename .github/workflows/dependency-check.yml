@@ -1,5 +1,7 @@
 # .github/workflows/dependency-check.yml
 name: Maven Dependency Check
+permissions:
+  contents: read
 
 on:
   workflow_dispatch:  # manually triggerable

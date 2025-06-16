@@ -64,7 +64,7 @@
 		<multi-module-release.version>3.0.0</multi-module-release.version>
 		<maven.plugin.plugin.version>3.15.1</maven.plugin.plugin.version>
 		<maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
-		<maven.dependency.plugin.version>3.7.1</maven.dependency.plugin.version>
+		<maven.dependency.plugin.version>3.8.1</maven.dependency.plugin.version>
 		<maven.site.plugin.version>3.21.0</maven.site.plugin.version>
 		<doxia.module.markdown.version>2.0.0</doxia.module.markdown.version>
 		<maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>

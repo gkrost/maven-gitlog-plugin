@@ -61,7 +61,7 @@
 		<maven.reporting.api.version>4.0.0</maven.reporting.api.version>
 		<doxia.sink.api.version>1.12.0</doxia.sink.api.version>
 		<xml-apis.version>2.0.2</xml-apis.version>
-		<multi-module-release.version>3.0.0</multi-module-release.version>
+		<multi-module-release.version>3.8.2</multi-module-release.version>
 		<maven.plugin.plugin.version>3.15.1</maven.plugin.plugin.version>
 		<maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
 		<maven.dependency.plugin.version>3.8.1</maven.dependency.plugin.version>
